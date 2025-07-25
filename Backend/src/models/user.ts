@@ -1,5 +1,11 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import Joi from 'joi';
+import { EnumType } from 'typescript';
+
+export enum Gender {
+  Male = "Male",
+  Female = "Female"
+}
 
 export interface IUser extends Document {
   username: string,
@@ -7,6 +13,8 @@ export interface IUser extends Document {
   password: string,
   college: string,
   major: string,
+  gender: Gender,
+  verified: boolean,
   createdAt: Date,
 }
 
@@ -43,17 +51,27 @@ const userSchema: Schema<IUser> = new Schema({
     required: true,
     trim: true,
   },
+  gender: {
+    type: String,
+    enum: Object.values(Gender),
+    required: true 
+  },
+  verified: {
+    type: Boolean,
+    default: false,
+  },
 }, {
   timestamps: true
 });
 
 export type userInput = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  college: string;
-  major: string;
+  username: string,
+  email: string,
+  password: string,
+  confirmPassword: string,
+  college: string,
+  major: string,
+  gender: Gender,
 };
 
 
@@ -82,6 +100,24 @@ export const registerValidation = (obj: userInput) => {
     }),
     major: Joi.string().trim().required().messages({
       "string.empty": "Major is required",
+    }),
+    gender: Joi.string().trim().required().messages({
+      "string.empty": "Geder is required",
+    }),
+  });
+
+  return schema.validate(obj);
+}
+
+export const loginValidation = (obj: userInput) => {
+  const schema = Joi.object({
+    email: Joi.string().trim().email().required().messages({
+      "string.email": "please enter a valid email...",
+      "string.empty": "Email can't be empty",
+    }),
+    password: Joi.string().trim().required().min(8).messages({
+      "string.min": "Password can't be less than 3",
+      "string.empty": "Password is required",
     }),
   });
 

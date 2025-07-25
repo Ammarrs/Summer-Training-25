@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import {userModel, IUser } from '../models/user';
+import {userModel, IUser, Gender } from '../models/user';
 
 export const findUserByEmail = async (email: string): Promise<IUser | null> => {
   return await userModel.findOne({ email });
@@ -11,6 +11,7 @@ export const createUser = async (userData: {
   password: string;
   college: string;
   major: string;
+  gender: Gender;
 }): Promise<IUser | null> => {
   const newUser = new userModel(userData);
   return await newUser.save();
@@ -28,3 +29,4 @@ export const updateUser = async (userId: string, updatedData: Partial<IUser>): P
 export const deleteUserById = async (userId: string): Promise<IUser | null> => {
   return await userModel.findByIdAndDelete(new Types.ObjectId(userId));
 };
+
