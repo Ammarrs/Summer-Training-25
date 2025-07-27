@@ -47,7 +47,17 @@ const userSchema: Schema<IUser> = new Schema({
   timestamps: true
 });
 
-export const registerValidation = (obj) => {
+export type userInput = {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  college: string;
+  major: string;
+};
+
+
+export const registerValidation = (obj: userInput) => {
   const schema = Joi.object({
     username: Joi.string().trim().min(3).max(30).required().messages({
       "string.base": "Username must be String!",
