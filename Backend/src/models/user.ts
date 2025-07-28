@@ -2,10 +2,6 @@ import mongoose, { Document, Schema } from 'mongoose';
 import Joi from 'joi';
 import { EnumType } from 'typescript';
 
-export enum Gender {
-  Male = "Male",
-  Female = "Female"
-}
 
 export interface IUser extends Document {
   username: string,
@@ -13,7 +9,7 @@ export interface IUser extends Document {
   password: string,
   college: string,
   major: string,
-  gender: Gender,
+  gender: "male" | "female",
   verified: boolean,
   createdAt: Date,
 }
@@ -53,7 +49,7 @@ const userSchema: Schema<IUser> = new Schema({
   },
   gender: {
     type: String,
-    enum: Object.values(Gender),
+    enum: ["male", "female"],
     required: true 
   },
   verified: {
@@ -71,7 +67,7 @@ export type userInput = {
   confirmPassword: string,
   college: string,
   major: string,
-  gender: Gender,
+  gender: "male" | "female",
 };
 
 
@@ -101,8 +97,8 @@ export const registerValidation = (obj: userInput) => {
     major: Joi.string().trim().required().messages({
       "string.empty": "Major is required",
     }),
-    gender: Joi.string().trim().required().messages({
-      "string.empty": "Geder is required",
+    gender: Joi.string().valid("male", "female").trim().required().messages({
+      "string.empty": "Gender is required",
     }),
   });
 

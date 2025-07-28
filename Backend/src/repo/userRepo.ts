@@ -1,9 +1,13 @@
 import { Types } from 'mongoose';
-import {userModel, IUser, Gender } from '../models/user';
+import {userModel, IUser} from '../models/user';
 
 export const findUserByEmail = async (email: string): Promise<IUser | null> => {
   return await userModel.findOne({ email });
 }
+
+export const findUserById = async (id: string): Promise<IUser | null> => {
+  return await userModel.findById(id);
+};
 
 export const createUser = async (userData: {
   username: string;
@@ -11,7 +15,7 @@ export const createUser = async (userData: {
   password: string;
   college: string;
   major: string;
-  gender: Gender;
+  gender: "male" | "female";
 }): Promise<IUser | null> => {
   const newUser = new userModel(userData);
   return await newUser.save();

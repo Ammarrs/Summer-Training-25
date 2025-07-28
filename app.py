@@ -31,4 +31,4 @@ def schedule_endpoint():
         return jsonify({"error": "Invalid input or server error."}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000);
