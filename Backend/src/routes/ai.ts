@@ -21,7 +21,7 @@ router.post("/mood", async (req, res) => {
     const { mood } = req.body;
     const response = await sendMood(mood);
     res.json(response);
-  } catch (err) {
+  } catch (err: any) {
     res.status(500).json({ error: "AI Mood failed", details: err.message });
   }
 });
