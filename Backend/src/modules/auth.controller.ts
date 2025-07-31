@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { Gender, loginValidation, registerValidation, userModel } from "../models/user";
+import { loginValidation, registerValidation, userModel } from "../models/user";
 import { findUserByEmail, createUser } from "../repo/userRepo";
 import { sendEmail } from "../utils/sendEmail";
 import { mongo } from "mongoose";
@@ -15,7 +15,7 @@ type UserInput = {
   password: string;
   college: string;
   major: string;
-  gender: Gender;
+  gender: "male" | "female";
 };
 
 export const register = async (req: Request, res: Response) => {
