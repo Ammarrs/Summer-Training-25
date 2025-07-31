@@ -10,7 +10,7 @@ This manual explains how to set up and run the complete project, including the F
 project-root/
 ├── frontend/        # Flutter app
 ├── backend/         # Node.js + Express + MongoDB
-└── ai/              # Flask AI service
+└── /                # Flask AI service
 ```
 
 ---
@@ -95,7 +95,7 @@ npm install -g nodemon
 **Location:**
 
 ```
-cd ai/
+cd /
 ```
 
 **Create and activate virtual environment:**
@@ -119,7 +119,7 @@ pip install -r requirements.txt
 flask run
 ```
 
-> ✅ Set FLASK\_APP if using a blueprint structure:
+> ✅ Set FLASK_APP if using a blueprint structure:
 
 ```bash
 set FLASK_APP=app.py       # Windows
@@ -145,7 +145,9 @@ set FLASK_APP=app
 - Use HTTP requests from Express to Flask:
 
 ```ts
-await axios.post("http://localhost:5000/ai-endpoint", { /* data */ })
+await axios.post("http://localhost:5000/ai-endpoint", {
+  /* data */
+});
 ```
 
 - Ensure CORS is enabled in Flask.
@@ -187,4 +189,3 @@ deactivate
 ---
 
 > Built with 💻 by the team — keep coding, keep crushing!
-
